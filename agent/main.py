@@ -69,13 +69,13 @@ def run_loop():
         print(f"CPU usage:  {cpu:.2f}%")
         print(f"Memory used:  {used_kb//1024}MB / {total_kb//1024}MB")
 
-        disk_line = f"DISK: {fmt_bytes(used_b)} / {fmt_bytes(total_b)} ({disk_pct:.1f}%)"
+        disk_line = f"Disk used: {fmt_bytes(used_b)} / {fmt_bytes(total_b)} ({disk_pct:.1f}%)"
         print(disk_line)
 
-        ssh_line = f"{SERVICE.upper()}:  {ssh_state}"
+        ssh_line = f"{SERVICE.upper()} service status:  {ssh_state}"
         print(ssh_line)
 
-        err_line = f"ERRORS (since {ERR_WINDOW}): {err_count}"
+        err_line = f"Errors (since {ERR_WINDOW}): {err_count}"
         print(err_line)
 
         print(f"OVERALL: {overall_status}")
