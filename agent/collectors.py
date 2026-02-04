@@ -35,14 +35,14 @@ def get_cpu_usage(interval=0.25):
 
 
 def get_memory_usage():
-    """Return (used_kb, total_kb) from /proc/meminfo."""
+    """Return (used_kb, total_kb, available_kb) from /proc/meminfo."""
     mem = {}
     with open("/proc/meminfo") as f:
         for line in f:
             k, v = line.split(":")
             mem[k] = int(v.strip().split()[0])
     used = mem["MemTotal"] - mem["MemAvailable"]
-    return used, mem["MemTotal"]
+    return used, mem["MemTotal"], mem["MemAvailable"]
 
 
 def get_disk_usage(path="/"):
