@@ -11,6 +11,16 @@ Simple Linux system monitoring tool that reads from `/proc`.
 python3 monitor.py
 ```
 
+Monitor should print something like
+
+```yaml
+CPU:   23%
+MEM:   1.1GB / 3.8GB
+DISK:  42% used
+SSH:   active
+ERRORS (last 5 min): 0
+```
+
 ## Metrics
 
 - CPU usage (computed from `/proc/stat` deltas)
