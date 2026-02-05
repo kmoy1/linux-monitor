@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 from .collectors import (
     count_recent_errors,
@@ -35,9 +36,11 @@ class StatusTracker:
 
 def run_loop():
     ERR_WINDOW = "5 min ago"
-    SERVICE = "ssh"
+    SERVICE = "fake-service"
     thresholds = Thresholds()
     cpu_window = RollingWindow(thresholds.cpu.consecutive_samples)
+    alert_history = []
+    alert_history_limit = 20
 
     trackers = {
         "cpu": StatusTracker("CPU"),
@@ -92,11 +95,17 @@ def run_loop():
             transition = trackers[key].update(current)
             if transition:
                 prev, now = transition
-                alerts.append(f"{trackers[key].name}: {prev} -> {now}")
+                ts = datetime.now().isoformat(timespec="seconds")
+                alerts.append(f"{ts} {trackers[key].name}: {prev} -> {now}")
 
         if alerts:
+            alert_history.extend(alerts)
+            if len(alert_history) > alert_history_limit:
+                alert_history = alert_history[-alert_history_limit:]
+
+        if alert_history:
             print("ALERTS:")
-            for line in alerts:
+            for line in alert_history:
                 print(f"  {line}")
 
         time.sleep(1)
