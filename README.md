@@ -47,6 +47,9 @@ ALERTS:
 ```
 
 ## Metrics
-
-- CPU usage (computed from `/proc/stat` deltas)
+- CPU usage (computed from `/proc/stat`)
 - Memory usage (`MemTotal` - `MemAvailable` from `/proc/meminfo`)
+- Disk usage (percent used, from `shutil.disk_usage`)
+- Service state (`systemctl is-active`)
+- Recent error count (`journalctl -p err --since ...`)
+- Overall status (`OK | WARN | CRIT`)
