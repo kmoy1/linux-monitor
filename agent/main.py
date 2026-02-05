@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 from .collectors import (
     count_recent_errors,
@@ -95,7 +95,7 @@ def run_loop():
             transition = trackers[key].update(current)
             if transition:
                 prev, now = transition
-                ts = datetime.now().isoformat(timespec="seconds")
+                ts = datetime.now(timezone.utc).isoformat(timespec="seconds")
                 alerts.append(f"{ts} {trackers[key].name}: {prev} -> {now}")
 
         if alerts:
